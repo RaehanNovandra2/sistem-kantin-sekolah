@@ -12,7 +12,7 @@ if(isset($_POST['update']))
     $alamat=$_POST['alamat'];
         
     // update user data
-    $result = mysqli_query($mysqli, "UPDATE penjual SET nama='$name',nohp='$nohp',telepon='$telepon' WHERE id=$id");
+    $result = mysqli_query($mysqli, "UPDATE penjual SET nama='$name',nohp='$nohp',alamat='$alamat' WHERE id=$id");
     
     // Redirect to homepage to display updated user in list
     header("Location: index.php");
@@ -49,8 +49,8 @@ while($user_data = mysqli_fetch_array($result))
                 <td><input type="text" name="nama" value=<?php echo $nama;?>></td>
             </tr>
             <tr> 
-                <td>telepon</td>
-                <td><input type="text" name="telepon" value=<?php echo $nohp;?>></td>
+                <td>nohp</td>
+                <td><input type="number" name="nohp" value=<?php echo $nohp;?>></td>
             </tr>
             <tr> 
                 <td>alamat</td>

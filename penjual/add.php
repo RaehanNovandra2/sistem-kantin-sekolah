@@ -19,7 +19,7 @@
             </tr>
             <tr> 
                 <td>nohp</td>
-                <td><input type="text" name="nohp"></td>
+                <td><input type="number" name="nohp"></td>
             </tr>
             <tr> 
                 <td>alamat</td>

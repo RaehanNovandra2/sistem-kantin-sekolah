@@ -13,7 +13,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM penjual ORDER BY id DESC");
  
 <body>
 <a href="add.php">Add New penjual</a><br/><br/>
- 
+<a href="../index.php">Kembali ke menu</a>
     <table width='80%' border=1>
  
     <tr>

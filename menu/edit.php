@@ -1,18 +1,20 @@
 <?php
 // include database connection file
-include_once("config.php");
- 
+include_once("../config.php");
+
+$query = mysqli_query($mysqli, "SELECT nama, id FROM penjual");
 // Check if form is submitted for user update, then redirect to homepage after update
 if(isset($_POST['update']))
 {	
     $id = $_POST['id'];
     
-    $name=$_POST['name'];
-    $mobile=$_POST['mobile'];
-    $email=$_POST['email'];
-        
+    $nama=$_POST['nama'];
+    $jenis=$_POST['jenis'];
+    $harga=$_POST['harga'];
+    $stok=$_POST['stok'];
+    $id_penjual=$_POST['id_penjual'];    
     // update user data
-    $result = mysqli_query($mysqli, "UPDATE users SET name='$name',email='$email',mobile='$mobile' WHERE id=$id");
+    $result = mysqli_query($mysqli, "UPDATE menu SET nama='$nama',jenis='$jenis',harga='$harga',stok='$stok',id_penjual='$id_penjual' WHERE id=$id");
     
     // Redirect to homepage to display updated user in list
     header("Location: index.php");
@@ -24,13 +26,15 @@ if(isset($_POST['update']))
 $id = $_GET['id'];
  
 // Fetech user data based on id
-$result = mysqli_query($mysqli, "SELECT * FROM users WHERE id=$id");
+$result = mysqli_query($mysqli, "SELECT * FROM menu WHERE id=$id");
  
 while($user_data = mysqli_fetch_array($result))
 {
-    $name = $user_data['name'];
-    $email = $user_data['email'];
-    $mobile = $user_data['mobile'];
+    $nama = $user_data['nama'];
+    $jenis = $user_data['jenis'];
+    $harga = $user_data['harga'];
+    $stok = $user_data['stok'];
+    $id_penjual = $user_data['id_penjual'];
 }
 ?>
 <html>
@@ -45,16 +49,43 @@ while($user_data = mysqli_fetch_array($result))
     <form name="update_user" method="post" action="edit.php">
         <table border="0">
             <tr> 
-                <td>Name</td>
-                <td><input type="text" name="name" value=<?php echo $name;?>></td>
+                <td>Nama</td>
+                <td><input type="text" name="nama" value=<?php echo $nama;?>></td>
             </tr>
             <tr> 
-                <td>Email</td>
-                <td><input type="text" name="email" value=<?php echo $email;?>></td>
+                <td>Jenis</td>
+                <td>
+                    <select name="jenis">
+                        <option value="makanan" <?php echo $jenis=="makanan"?"selected":""; ?>> makanan</option>
+                        <option value="minuman" <?php echo $jenis=="minuman"?"selected":""; ?>>minuman</option>                </td>
             </tr>
             <tr> 
-                <td>Mobile</td>
-                <td><input type="text" name="mobile" value=<?php echo $mobile;?>></td>
+                <td>Harga</td>
+                <td><input type="number" name="harga" value=<?php echo $harga;?>></td>
+            </tr>
+            <tr> 
+                <td>Stok</td>
+                <td><input type="text" name="stok" value=<?php echo $stok;?>></td>
+            </tr>
+            <tr> 
+                <td>Nama Penjual</td>
+                <td>
+                    <select name="id_penjual">
+                    <?php while($isi = mysqli_fetch_array($query)): ?>
+                        <option value="<?= $isi['id'];?>" ><?= $isi['nama']; ?></option>
+                        <?php
+                        while($data = mysqli_fetch_array($query)) {
+                            $selected = $id_penjual == $data['id_penjual'] ? "selected" : 'asdsa';
+                            echo '<option value="'.$data['id_penjual'].'" '.$selected.'> 
+                                    '.$data['nama'].'
+                                </option>';
+                        }
+                    ?>
+                    <?php endwhile; ?>
+                    
+                   
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td><input type="hidden" name="id" value=<?php echo $_GET['id'];?>></td>
@@ -63,4 +94,4 @@ while($user_data = mysqli_fetch_array($result))
         </table>
     </form>
 </body>
-</html>
+</html> 
